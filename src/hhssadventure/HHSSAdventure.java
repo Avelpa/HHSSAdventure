@@ -5,6 +5,9 @@
  */
 package hhssadventure;
 
+import java.io.FileReader;
+import java.util.Scanner;
+
 /**
  *
  * @author lamon
@@ -15,7 +18,20 @@ public class HHSSAdventure {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        try
+        {
+              FileReader file = new FileReader("images\\pics.txt");
+              
+              Scanner s = new Scanner(file);
+              while(s.hasNext())
+              {
+                 System.out.println(s.next());
+              }
+         }catch(Exception e)
+         {
+              e.printStackTrace();
+         }        
     }
     
 }
