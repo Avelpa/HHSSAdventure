@@ -37,6 +37,25 @@ public class Scene {
         this.forward = s;
     }
     
+    public Scene getForward()
+    {
+        return forward;
+    }
+    
+    public Scene getRight()
+    {
+        return right;
+    }
+    
+    public Scene getLeft()
+    {
+        return left;
+    }
+    
+    public String getPicture()
+    {
+        return picture;
+    }
     
     
     

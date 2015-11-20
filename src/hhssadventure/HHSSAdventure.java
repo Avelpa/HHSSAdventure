@@ -20,10 +20,19 @@ public class HHSSAdventure {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        
+        Scene currentScene = null;
+        
+        
         HashMap<String, Scene> scenes = new HashMap<>();
         HashMap<String, String[]> locationScenes = new HashMap<>();
         // scene, nextLocation nextDirection (index of above array)
         HashMap<String, HashMap<String, Integer>> sceneForwards = new HashMap<>();
+        
+        String curLocationName = "";
+        int curLocationIndex = 0;
+        
         try
         {
               FileReader file = new FileReader("images\\pics.txt");
@@ -71,6 +80,14 @@ public class HHSSAdventure {
                      
                      locationScenes.put(location, locationScenesArr);
                  }
+                 else if (index == 0)
+                 {
+                     curLocationName = s.next();
+                 }
+                 else if (index == 1)
+                 {
+                     curLocationIndex = convertDirectionToIndex(s.next().charAt(0));
+                 }
                  else
                  {
                      s.next();
@@ -81,27 +98,30 @@ public class HHSSAdventure {
          {
               e.printStackTrace();
          }        
-//        for (Map.Entry location: locationScenes.entrySet())
-//        {
-//            // the N E S W Scene array
-//            String[] curLocations = (String[])location.getValue();
-//            String[] nextLocations = (String[])sceneForwards.get((String)location.getKey());
-//            for (int i = 0; i < curLocations.length; i ++)
-//            {
-//                String left = curLocations[modifyIndex(i-1, curLocations.length)];
-//                String right = curLocations[modifyIndex(i+1, curLocations.length)];
-//                String forward = nextLocation[i];
-//                //System.out.println(forward);
-//                
-//                Scene curLocation = scenes.get(curLocations[i]);
-//                
-//                curLocation.setLeft(scenes.get(left));
-//                curLocation.setRight(scenes.get(right));
-//                curLocation.setForward(scenes.get(forward));
-//            }
-//        }
+        for (Map.Entry location: locationScenes.entrySet())
+        {
+            // the N E S W Scene array
+            String[] curLocations = (String[])location.getValue();
+            for (int i = 0; i < curLocations.length; i ++)
+            {
+                String left = curLocations[modifyIndex(i-1, curLocations.length)];
+                String right = curLocations[modifyIndex(i+1, curLocations.length)];
+                Map.Entry nextSceneLocation = sceneForwards.get(curLocations[i]).entrySet().iterator().next();
+                
+                Scene curLocation = scenes.get(curLocations[i]);
+                
+                curLocation.setLeft(scenes.get(left));
+                curLocation.setRight(scenes.get(right));
+                
+                if (nextSceneLocation.getKey() != null)
+                {
+                    String forward = locationScenes.get((String)nextSceneLocation.getKey())[(int)nextSceneLocation.getValue()];
+                    curLocation.setForward(scenes.get(forward));
+                }
+            }
+        }
         
-        
+        currentScene = scenes.get(locationScenes.get(curLocationName)[curLocationIndex]);
     }
     
     public static int modifyIndex(int index, int arrLength)
