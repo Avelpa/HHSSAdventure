@@ -4,7 +4,9 @@
  */
 package hhssadventure;
 
+import java.awt.AWTException;
 import java.awt.Dimension;
+import java.awt.Robot;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -21,8 +23,10 @@ public class UserInterface extends JComponent implements MouseListener, MouseMot
     private final int HIEGHT = 945;
     private final int WIDTH = 1265;
     
+    private Robot robot;
     
-    public UserInterface() {
+    public UserInterface() throws AWTException {
+        this.robot = new Robot();
         window = new JFrame("HHSS Adventure");
         window.add(this);
         window.setVisible(true);
