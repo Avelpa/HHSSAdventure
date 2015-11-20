@@ -11,16 +11,18 @@ package hhssadventure;
 public class Scene {
     private String picture;
     private char direction;
+    private String location;
     private boolean frontBlocked;
     
     private Scene left;
     private Scene right;
     private Scene forward;
     
-    public Scene(String picture, char direction, boolean frontBlocked) {
+    public Scene(String location, String picture, boolean frontBlocked, char direction) {
         this.picture = picture;
         this.direction = direction;
         this.frontBlocked = frontBlocked;
+        this.location = location;
     }
     
     public void setLeft(Scene s) {

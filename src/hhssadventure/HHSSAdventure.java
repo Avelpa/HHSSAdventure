@@ -62,7 +62,7 @@ public class HHSSAdventure {
                             }
                             
                             // populate scenes
-                            scenes.put(image, new Scene(location, direction.charAt(0), image));
+                            scenes.put(image, new Scene(location, image, blocked, direction.charAt(0)));
                             // populate scenes array for each locatio (N E S W)
                             locationScenesArr[i] = image;
                             // add to sceneForwards
@@ -81,25 +81,25 @@ public class HHSSAdventure {
          {
               e.printStackTrace();
          }        
-        for (Map.Entry location: locationScenes.entrySet())
-        {
-            // the N E S W Scene array
-            String[] curLocations = (String[])location.getValue();
-            String[] nextLocations = (String[])sceneForwards.get((String)location.getKey());
-            for (int i = 0; i < curLocations.length; i ++)
-            {
-                String left = curLocations[modifyIndex(i-1, curLocations.length)];
-                String right = curLocations[modifyIndex(i+1, curLocations.length)];
-                String forward = nextLocation[i];
-                //System.out.println(forward);
-                
-                Scene curLocation = scenes.get(curLocations[i]);
-                
-                curLocation.setLeft(scenes.get(left));
-                curLocation.setRight(scenes.get(right));
-                curLocation.setForward(scenes.get(forward));
-            }
-        }
+//        for (Map.Entry location: locationScenes.entrySet())
+//        {
+//            // the N E S W Scene array
+//            String[] curLocations = (String[])location.getValue();
+//            String[] nextLocations = (String[])sceneForwards.get((String)location.getKey());
+//            for (int i = 0; i < curLocations.length; i ++)
+//            {
+//                String left = curLocations[modifyIndex(i-1, curLocations.length)];
+//                String right = curLocations[modifyIndex(i+1, curLocations.length)];
+//                String forward = nextLocation[i];
+//                //System.out.println(forward);
+//                
+//                Scene curLocation = scenes.get(curLocations[i]);
+//                
+//                curLocation.setLeft(scenes.get(left));
+//                curLocation.setRight(scenes.get(right));
+//                curLocation.setForward(scenes.get(forward));
+//            }
+//        }
         
         
     }
