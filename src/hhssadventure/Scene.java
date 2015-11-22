@@ -4,12 +4,20 @@
  */
 package hhssadventure;
 
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.imageio.ImageIO;
+
 /**
  *
  * @author johns6971
  */
 public class Scene {
-    private String picture;
+    private String imageLocation;
+    private BufferedImage image;
     private char direction;
     private String location;
     private boolean frontBlocked;
@@ -18,11 +26,25 @@ public class Scene {
     private Scene right;
     private Scene forward;
     
-    public Scene(String location, String picture, boolean frontBlocked, char direction) {
-        this.picture = picture;
+    private ArrayList<Rectangle> rectangles;
+    
+    public Scene(String location, String imageLocation, boolean frontBlocked, char direction) {
+        this.imageLocation = imageLocation;
         this.direction = direction;
         this.frontBlocked = frontBlocked;
         this.location = location;
+        
+        rectangles = new ArrayList();
+    }
+    
+    public void addRect(Rectangle r)
+    {
+        rectangles.add(r);
+    }
+    
+    public boolean isBlocked()
+    {
+        return frontBlocked;
     }
     
     public void setLeft(Scene s) {
@@ -52,9 +74,30 @@ public class Scene {
         return left;
     }
     
-    public String getPicture()
+    public BufferedImage getImage()
     {
-        return picture;
+        if (image == null)
+        {
+            loadImage();
+        }
+        return image;
+    }
+    
+    private void loadImage()
+    {
+        try {
+            image = ImageIO.read(new File("images\\" + imageLocation));
+        } catch (IOException e) {}
+    }
+    
+    public String getImagePath()
+    {
+        return imageLocation;
+    }
+    
+    public ArrayList getRectangles()
+    {
+        return rectangles;
     }
     
     

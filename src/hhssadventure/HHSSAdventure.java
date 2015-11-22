@@ -5,6 +5,7 @@
  */
 package hhssadventure;
 
+import java.awt.AWTException;
 import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,13 +20,101 @@ public class HHSSAdventure {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        
-        
-        Scene currentScene = null;
-        
-        
-        HashMap<String, Scene> scenes = new HashMap<>();
+    
+    private Scene currentScene = null;
+    HashMap<String, Scene> scenes = new HashMap<>();
+    private View view;
+    
+    private void run() throws AWTException
+    {
+        view = new View();
+        view.setScene(currentScene);
+        while (true)
+        {
+            
+            int horizontalMovement = view.getHorizontalMovement();
+//            if (view.isMousePressed())
+//            {
+//                if (!currentScene.isBlocked())
+//                {
+//                    currentScene = currentScene.getForward();
+//                    view.setScene(currentScene);
+//                }
+//                System.out.println(currentScene.getImagePath());
+//                view.clearMousePressed();
+//            }
+            if (Math.abs(horizontalMovement) > currentScene.getImage().getWidth()/2)
+            {
+                
+                if (horizontalMovement < 0)
+                {
+                    currentScene = currentScene.getLeft();
+                }
+                else if (horizontalMovement > 0)
+                {
+                    currentScene = currentScene.getRight();
+                }
+                view.setScene(currentScene);
+                view.resetHorizontalMovement();
+            }
+            else
+            {
+                char keyPressed = view.getKeyPressed();
+                switch(keyPressed)
+                {
+                    case 'a':
+                        if (currentScene.getLeft().getForward() != null)
+                        {
+                            currentScene = currentScene.getLeft().getForward().getRight();
+                            view.setScene(currentScene);
+                        }
+                        break;
+                    case 'd':
+                        if (currentScene.getRight().getForward() != null)
+                        {
+                            currentScene = currentScene.getRight().getForward().getLeft();
+                            view.setScene(currentScene);
+                        }
+                        break;
+                    case 'w':
+                        if (currentScene.getForward() != null)
+                        {
+                            currentScene = currentScene.getForward();
+                            view.setScene(currentScene);
+                        }
+                        break;
+                    case 's':
+                        if (currentScene.getLeft().getLeft().getForward() != null)
+                        {
+                            currentScene = currentScene.getLeft().getLeft().getForward().getRight().getRight();
+                            view.setScene(currentScene);
+                        }
+                        break;
+                }
+                view.clearKeyPressed();
+            }
+            
+            if (view.isJumping())
+            {
+                view.jump();
+            }
+            
+            view.repaint();
+            
+            try{
+                Thread.sleep(1);
+            }catch(Exception e){};
+        }
+    }
+    
+    public static void main(String[] args) throws AWTException {
+        HHSSAdventure main = new HHSSAdventure();
+        main.loadAndParseData();
+        main.run();
+    }
+    
+    private void loadAndParseData()
+    {
         HashMap<String, String[]> locationScenes = new HashMap<>();
         // scene, nextLocation nextDirection (index of above array)
         HashMap<String, HashMap<String, Integer>> sceneForwards = new HashMap<>();
@@ -124,7 +213,7 @@ public class HHSSAdventure {
         currentScene = scenes.get(locationScenes.get(curLocationName)[curLocationIndex]);
     }
     
-    public static int modifyIndex(int index, int arrLength)
+    public int modifyIndex(int index, int arrLength)
     {
         if (index < 0)
         {
@@ -138,7 +227,7 @@ public class HHSSAdventure {
         return index;
     }
     
-    public static int convertDirectionToIndex(char direction)
+    public int convertDirectionToIndex(char direction)
     {
         switch(direction)
         {
