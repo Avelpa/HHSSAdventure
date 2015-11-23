@@ -1,5 +1,10 @@
-Caf1
+Entrance1
 N
+Entrance1
+N Front.JPG false Caf2 N
+E Right.JPG true
+S Back.JPG true
+W Left.JPG true
 Upstairs1
 N IMG_0045.JPG false Dowstairs S
 E IMG_0046.JPG true
@@ -53,7 +58,7 @@ W IMG_0086.JPG false Eng3 W
 Caf2
 N IMG_0087.JPG false Caf1 N
 E IMG_0088.JPG true
-S IMG_0089.JPG true
+S IMG_0089.JPG false Entrance1 S
 W IMG_0090.JPG true
 Caf3
 N IMG_0091.JPG true
@@ -120,3 +125,4 @@ N IMG_0136.JPG false Upstairs1 S
 E IMG_0137.JPG true
 S IMG_0138.JPG false Eng3 S
 W IMG_0139.JPG true
+

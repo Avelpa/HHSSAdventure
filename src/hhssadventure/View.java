@@ -105,7 +105,7 @@ public class View extends JComponent implements MouseMotionListener, MouseListen
             for (Rectangle r: rectangles)
             {
                 int newX = -horizontalMovement + midX + (int)((r.x-midX)*Math.pow(growth, i));
-                int newY = midY + (int)((r.y-midY)*Math.pow(growth, i));
+                int newY = (int)(sceneY - FLOOR) + midY + (int)((r.y-midY)*Math.pow(growth, i));
                 int newWidth = (int)(r.width*Math.pow(growth, i));
                 int newHeight = (int)(r.height*Math.pow(growth, i));
                 g.fillRect(newX, newY, newWidth, newHeight);
